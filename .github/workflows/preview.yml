@@ -1,0 +1,29 @@
+name: Publicar no Expo Go
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pegar codigo do Git
+        uses: actions/checkout@v4
+
+      - name: Instalar o Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar o EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Instalar dependencias do App
+        run: npm install --legacy-peer-deps
+
+      - name: Publicar para o Expo Go
+        run: eas update --branch main --message "Atualizado pelo GitHub Actions"
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
