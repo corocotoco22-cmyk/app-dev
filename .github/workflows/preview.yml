@@ -11,10 +11,10 @@ jobs:
       - name: Pegar codigo do Git
         uses: actions/checkout@v4
 
-      - name: Instalar o Node.js
+      - name: Instalar o Node.js Atualizado
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24 # 👈 Mudamos para a versão 24 exigida pelo GitHub!
           cache: 'npm'
 
       - name: Instalar o EAS CLI
