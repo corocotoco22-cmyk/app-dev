@@ -1,34 +1,37 @@
-name: Publicar no Expo Go
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pegar codigo do Git
-        uses: actions/checkout@v4
-
-      - name: Instalar o Node.js Atualizado
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: 'npm'
-
-      - name: Instalar o EAS CLI
-        run: npm install -g eas-cli
-
-      - name: Instalar dependencias do App
-        run: npm install --legacy-peer-deps
-
-      - name: Vincular Projeto ao Expo
-        run: npx expo register --yes
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
-      - name: Publicar para o Expo Go
-        run: npx eas-cli update --branch main --message "Atualizado pelo GitHub Actions" --non-interactive
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+{
+  "expo": {
+    "name": "dev-app",
+    "slug": "dev-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "722d7b4e-7201-405d-5b03-f9adcae74c78"
+      }
+    }
+  }
+}
